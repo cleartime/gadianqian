@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+	<title>青蛙超市</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" href="css/swiper.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div id="app">
+		<section class="slider">
+			<div class="swiper-container">
+			    <div class="swiper-wrapper">
+			        <div class="swiper-slide"><img src="images/banner.png" width="100%"></div>
+			        <div class="swiper-slide">Slide 2</div>
+			        <div class="swiper-slide">Slide 3</div>
+			    </div>
+			    <!-- 如果需要分页器 -->
+			    <div class="swiper-pagination"></div>
+			</div>
+		</section>
+		<section class="center">
+			<div class="flex">
+				<div class="center-item flex">
+					<div class="center-left ">
+						<h2 class="title"><img src="images/icon.png">省呗</h2>
+						<p>利率：0.90%/月</p>
+						<p>额度：<span>1000-2万</span></p>
+						<p>期限：7-14天</p>
+					</div>
+				</div>
+				<div class="center-item flex">
+					<div class="center-left ">
+						<h2 class="title"><img src="images/icon.png">省呗</h2>
+						<p>利率：0.90%/月</p>
+						<p>额度：<span>1000-2万</span></p>
+						<p>期限：7-14天</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="list">
+			<ul>
+				<li>
+					<h2 class="title"><img src="images/icon.png">省呗</h2>
+					<div class="con flex">
+						<div class="con-left left">
+							<h2>2000-2万</h2>
+							<p>额度范围(元)</p>
+						</div>
+						<div class="con-right flex right">
+							<div class="con-right-left left">
+								<p>利率：2%/月</p>
+								<p>期限：21-21天</p>
+							</div>
+							<div class="con-right-right right">
+								<button>立即申请</button>
+								<span>421324人申请</span>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<h2 class="title"><img src="images/icon.png">省呗</h2>
+					<div class="con flex">
+						<div class="con-left left">
+							<h2>2000-2万</h2>
+							<p>额度范围(元)</p>
+						</div>
+						<div class="con-right flex right">
+							<div class="con-right-left left">
+								<p>利率：2%/月</p>
+								<p>期限：21-21天</p>
+							</div>
+							<div class="con-right-right right">
+								<button>立即申请</button>
+								<span>421324人申请</span>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</section>
+		<section class="login" v-show = "visite.login">
+			<h2 class="title">登录</h2>
+			<ul>
+				<li class="phone flex">
+					<input type="" name="" value="13902134567">
+				</li>
+				<li class="imgcode flex">
+					<input type="" name="" placeholder="获取图形验证码"><span>123</span>
+				</li>
+				<li class="code flex">
+					<input type="" name="" placeholder="获取验证码"><span class="code-btn">获取验证码</span>
+				</li>
+				<li class="tip flex">
+					<img :src = "tipIconUrl" @click = "tipIcon">我已阅读并同意<span>《服务协议》</span>
+				</li>
+				<li class="btn">
+					<span class="submit-btn">登录</span>
+				</li>
+			</ul>
+		</section>
+		<section class="alert" v-show = "visite.alert">
+			<img src="images/close.png" class="close" width="10%">
+		</section>
+		<section class="mask" v-show = "visite.mask">
+			<img src="images/close.png" class="close" width="10%" @click="close">
+		</section>
+	</div>
+	<script src="js/swiper.min.js"></script>
+	<script src="js/vue.js"></script>
+	<script src="js/index.js"></script>
+</body>
+</html>
