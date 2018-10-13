@@ -2,6 +2,12 @@
 	background: #ecf5fa;
 	min-width: 320px;
 }
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .25s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 .flex{
 	display: flex;
 	align-items: center;
@@ -10,14 +16,21 @@
 .flex > div{
 	flex: 1;
 }
+.slider .swiper-container{
+	height: auto
+}
 .center{
+	position: relative;
+	z-index: 99;
 	margin: 0 15px;
 	box-sizing: border-box;
+	margin-top: -20px;
 }
 .center-item:not(:first-child){
 	margin-left: 5px;
 }
 .center-item{
+	border-radius: 5px;
 	background: #fff;
 	box-sizing: border-box;
 	padding: 15px 15px 5px;
@@ -37,11 +50,14 @@
 }
 .center .title{
 	font-size: 16px;
-	line-height: 30px;
+	display: flex;
+	align-items: center;
+	height: 30px;
 }
 .center .title img{
 	width: 30px;
 	height: 30px;
+	margin-right: 10px
 }
 .list{
 	margin-top: 15px;
@@ -49,11 +65,18 @@
 .list li{
 	background: #fff;
 	border-bottom: 1px solid #f6f5f4;
-	padding: 15px 5px;
+	padding: 0 15px 15px;
 	margin-top: 15px;
 }
 .list li .title{
-	line-height: 50px
+	display: flex;
+	align-items: center;
+	height: 50px;
+}
+.list li .title img{
+	width: 30px;
+	height: 30px;
+	margin-right: 10px
 }
 .list li .con {
 	font-size: 13px;
@@ -129,10 +152,11 @@
 	right: 0;
 	position: fixed;
 }
-.mask .close{
+.close{
+	z-index: 101;
 	transform: rotate(90deg);
 	position: absolute;
-	top: 10%;
+	top: 20%;
 	right: 10%;
 }
 .alert, .login {
@@ -152,9 +176,26 @@
 .swiper-container {
     height: 300px;
 }  
+.login-margin{
+	z-index: 100;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #ecf5fa url("../images/bg.png") no-repeat top center;
+	background-size: contain;
+	text-align: center;
+}
+.logo{
+	position: relative;
+	top: 10%;
+	z-index: 101;
+	width: 120px;
+}
 .login{
 	background: #fff;
-	top: 35%;
+	top: 30%;
 	width: 90%;
 	margin-left: 5%;
 	border-radius: 10px;
@@ -181,8 +222,8 @@
 .login .title{
 	text-align: center;
 	color: #666;
-	font-size: 17px;
-	font-weight: normal;
+	font-size: 20px;
+	font-weight: 600;
 	height: 60px;
 	line-height: 60px;
 }
@@ -200,6 +241,10 @@
 	display: inline-block;
 	width: 100px;
 	border-radius: 20px;
+}
+.login .code-btn.dis{
+	background: #ccc;
+	pointer-events: none;
 }
 .login .submit-btn{
 	height: 40px;
