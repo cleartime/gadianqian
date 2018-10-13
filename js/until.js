@@ -18,7 +18,7 @@ function http(type, url, data, ca){
 	function success(res){
 		if(!res.data){
 			Vue.prototype.$toast.center(res.friendErrMsg);
-			return 
+			return ca && ca(false)
 		}
 		return ca && ca(res.data)
 	}

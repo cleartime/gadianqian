@@ -8,90 +8,94 @@
 	<link rel="stylesheet" type="text/css" href="css/swiper.min.css">
 	<link rel="stylesheet" type="text/css" href="toask/style.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-
 </head>
 <body>
 	<div id="app">
-		<section class="slider">
-			<div class="swiper-container">
-			    <div class="swiper-wrapper">
-			        <div class="swiper-slide" v-for='(i, index) in home.banerList' :key='index'><img :src="i.fileStorePath" width="100%" @click='linkto(i, 1)'></div>
-			    </div>
-			    <!-- 如果需要分页器 -->
-			    <div class="swiper-pagination"></div>
-			</div>
-		</section>
-		<section class="center">
-			<div class="flex">
-				<div class="center-item flex" 
-				 v-for='(i, index) in home.hotRecoList' :key='index'>
-					<div class="center-left " @click='linkto(i, 3)'>
+		<div v-if="home.banerList.length && home.hotRecoList.length && home.productList.length">
+			<section class="slider">
+				<div class="swiper-container">
+				    <div class="swiper-wrapper">
+				        <div class="swiper-slide" v-for='(i, index) in home.banerList' :key='index'><img :src="i.fileStorePath" width="100%" @click='linkto(i, 1)'></div>
+				    </div>
+				    <!-- 如果需要分页器 -->
+				    <div class="swiper-pagination"></div>
+				</div>
+			</section>
+			<section class="center">
+				<div class="flex">
+					<div class="center-item flex" 
+					 v-for='(i, index) in home.hotRecoList' :key='index'>
+						<div class="center-left " @click='linkto(i, 3)'>
+							<h2 class="title"><img :src="i.fileStorePath">{{i.productName}}</h2>
+							<p>利率：{{i.rate}}</p>
+							<p>额度：<span>{{i.amountRange}}</span></p>
+							<p>期限：{{i.cycle}}</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="list">
+				<ul>
+					<li v-for='(i, index) in home.productList' :key='index'  @click='linkto(i, 4)'>
 						<h2 class="title"><img :src="i.fileStorePath">{{i.productName}}</h2>
-						<p>利率：{{i.rate}}</p>
-						<p>额度：<span>{{i.amountRange}}</span></p>
-						<p>期限：{{i.cycle}}</p>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section class="list">
-			<ul>
-				<li v-for='(i, index) in home.productList' :key='index'  @click='linkto(i, 4)'>
-					<h2 class="title"><img :src="i.fileStorePath">{{i.productName}}</h2>
-					<div class="con flex">
-						<div class="con-left left">
-							<h2>{{i.amountRange}}</h2>
-							<p>额度范围(元)</p>
-						</div>
-						<div class="con-right flex right">
-							<div class="con-right-left left">
-								<p>利率：{{i.rate}}</p>
-								<p>期限：{{i.cycle}}</p>
+						<div class="con flex">
+							<div class="con-left left">
+								<h2>{{i.amountRange}}</h2>
+								<p>额度范围(元)</p>
 							</div>
-							<div class="con-right-right right">
-								<button>立即申请</button>
-								<span>{{i.applyNum}}人申请</span>
+							<div class="con-right flex right">
+								<div class="con-right-left left">
+									<p>利率：{{i.rate}}</p>
+									<p>期限：{{i.cycle}}</p>
+								</div>
+								<div class="con-right-right right">
+									<button>立即申请</button>
+									<span>{{i.applyNum}}人申请</span>
+								</div>
 							</div>
 						</div>
+					</li>
+				</ul>
+			</section>
+			<transition name="fade">
+				<section class="login-margin" v-show = "visite.login">
+					<img class="close" src="images/close.png"  width="10%" @click="close">
+					<img src="images/logo.png" alt="" class="logo">
+					<div class="login">
+						<h2 class="title">登录</h2>
+						<ul>
+							<li class="phone flex">
+								<input type="tel" maxlength="11" name="" value="" placeholder = "手机号码" v-model = 'login.mobilePhone'>
+							</li>
+							<li class="imgcode flex">
+								<input type="" name="" placeholder="获取图形验证码"  v-model = 'picVerifyCode'><img :src="picImgUrl" alt="" @click = 'getPicCodeApi'>
+							</li>
+							<li class="code flex">
+								<input type="" name="" placeholder="获取验证码"  v-model = 'login.smsCode'><span class="code-btn" @click = 'sendSMSCodeApi' :class="isSend ? 'dis': ''">{{!isSend ? '获取验证码' : '('+num+')重试'}}</span>
+							</li>
+							<li class="tip flex">
+								<img :src = "tipIconUrl" @click = "tipIcon" />我已阅读并同意<span>《服务协议》</span>
+							</li>
+							<li class="btn">
+								<span class="submit-btn" @click = 'submit'>登录</span>
+							</li>
+						</ul>
 					</div>
-				</li>
-			</ul>
-		</section>
-		<transition name="fade">
-			<section class="login-margin" v-show = "visite.login">
-				<img class="close" src="images/close.png"  width="10%" @click="close">
-				<img src="images/logo.png" alt="" class="logo">
-				<div class="login">
-					<h2 class="title">登录</h2>
-					<ul>
-						<li class="phone flex">
-							<input type="tel" maxlength="11" name="" value="" placeholder = "手机号码" v-model = 'login.mobilePhone'>
-						</li>
-						<li class="imgcode flex">
-							<input type="" name="" placeholder="获取图形验证码"  v-model = 'picVerifyCode'><img :src="picImgUrl" alt="" @click = 'getPicCodeApi'>
-						</li>
-						<li class="code flex">
-							<input type="" name="" placeholder="获取验证码"  v-model = 'login.smsCode'><span class="code-btn" @click = 'sendSMSCodeApi' :class="isSend ? 'dis': ''">{{!isSend ? '获取验证码' : '('+num+')重试'}}</span>
-						</li>
-						<li class="tip flex">
-							<img :src = "tipIconUrl" @click = "tipIcon" />我已阅读并同意<span>《服务协议》</span>
-						</li>
-						<li class="btn">
-							<span class="submit-btn" @click = 'submit'>登录</span>
-						</li>
-					</ul>
-				</div>
-			</section>
-		</transition>
-		<transition name="fade">
-			<section class="alert" v-show = "visite.alert">
-				<img class="close" src="images/close.png"  width="10%" @click="close">
-				<img :src="home.popupsList[0] && home.popupsList[0].fileStorePath" width="10%" @click='linkto(home.popupsList[0], 2)'>
-			</section>
-		</transition>
-		<transition name="fade">
-			<section class="mask" v-show = "visite.mask"></section>
-		</transition>
+				</section>
+			</transition>
+			<transition name="fade">
+				<section class="alert" v-show = "visite.alert">
+					<img class="close" src="images/close.png"  width="10%" @click="close">
+					<img :src="home.popupsList[0] && home.popupsList[0].fileStorePath" width="10%" @click='linkto(home.popupsList[0], 2)'>
+				</section>
+			</transition>
+			<transition name="fade">
+				<section class="mask" v-show = "visite.mask"></section>
+			</transition>
+		</div>
+		<p v-if='error' class="error">
+			服务器维护中，请稍后再试！
+		</p>
 	</div>
 	<script src="js/swiper.min.js"></script>
 	<script src="js/vue.js"></script>

@@ -2,6 +2,9 @@ new Vue({
 	 el: '#app',
 	data: function(){
 		return {
+			user: localStorage.user 
+			? JSON.parse(localStorage.user )
+			: {juid:''},
 			home: {
 				banerList: [],
 				hotRecoList: [],
@@ -13,6 +16,7 @@ new Vue({
 				login: false,
 				mask: false,
 			},
+			error: false,
 			tipIconSwitch: false,
 			picImgUrl: '',
 			picImg: {},
@@ -29,11 +33,6 @@ new Vue({
 		}
 	},
 	computed: {
-		'user': function(){
-			return localStorage.user 
-			? JSON.parson(localStorage.user )
-			: {juid:''}
-		},
 		'tipIconUrl': function(){
 			return `/images/${this.tipIconSwitch ? 'succ' : 'kong'}.png`
 		}
@@ -47,10 +46,18 @@ new Vue({
 	methods: {
 		init: function(){
 			http('get', getHomeInfoApi, null, function(res){
+				if(!res) {
+					this.error = true
+					return
+				}
 				this.home = res;
 				if (this.home.popupsList.length) {
 					this.visite.mask = true
 					this.visite.alert = true
+				}
+				if(!this.home.banerList.length && !this.home.hotRecoList.length && !this.home.productList.length){
+					this.error = true
+					return
 				}
 				this.$nextTick(function(){
 					this.banner()
@@ -65,15 +72,17 @@ new Vue({
 				return
 			}
 			var data = {
+				juid: this.user.juid,
+				token: this.user.token,
 				productId: item.productId || '',
 				position: type,
 				from: 1,
 				linkUrl: item.linkUrl
 			}
-			http('get', getHomeInfoApi, data)
-			if (item.linkUrl) {
+			http('get', getHomeInfoApi, data, function(){
 				location.href = item.linkUrl;
-			}
+			})
+			
 		},
 		banner(){
 			new Swiper('.swiper-container', {
@@ -92,8 +101,9 @@ new Vue({
 		},
 		getPicCodeApi: function(){
 			http('get', getPicCodeApi, null, function(res){
+				if(!res) return
 				this.picImg = res;
-				this.picImgUrl = res.picVerifyUrl +'?'+ res.picId;
+				this.picImgUrl = res.picVerifyUrl +'?picId='+ res.picId;
 			}.bind(this))
 		},
 		sendSMSCodeApi: function(){
@@ -121,7 +131,8 @@ new Vue({
 				mobilePhone: this.login.mobilePhone
 			}
 			http('post', sendSMSCodeApi	, data, function(res){
-				this.picImgUrl = res.picVerifyUrl +'?'+ res.picId;
+				if(!res) return
+				this.$toast.center('验证码发送成功');
 			}.bind(this))
 		},
 		tipIcon: function(){
@@ -140,9 +151,15 @@ new Vue({
 				this.$toast.center('验证码不能为空');
 				return
 			}
+			if(!this.tipIconSwitch){
+				this.$toast.center('请阅读协议并勾选');
+				return
+			}
 			http('get', regAndLogin	, this.login, function(res){
+				if(!res) return
 				this.user = res
 				localStorage.user = JSON.stringify(res)
+				this.visite.login = false;
 			}.bind(this))
 		}
 	},

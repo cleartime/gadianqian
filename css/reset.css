@@ -47,5 +47,8 @@ table {
 	border-spacing: 0;
 }
 html, body, #app{
-	height: 100%
+	height: 100%;
+	margin: auto;
+	max-width: 750px;
+	min-width: 320px;
 }
