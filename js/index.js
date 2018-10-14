@@ -12,10 +12,12 @@ new Vue({
 				productList: []
 			},
 			visite: {
+				protocol: false,
 				alert: false,
 				login: false,
 				mask: false,
 			},
+			protocol: {},
 			error: false,
 			tipIconSwitch: false,
 			picImgUrl: '',
@@ -66,6 +68,7 @@ new Vue({
 		},
 		linkto: function(item, type){
 			if (!this.user.juid) {
+				this.visite.protocol = false
 				this.visite.mask = false
 				this.visite.alert = false
 				this.visite.login = true
@@ -98,12 +101,23 @@ new Vue({
 			this.visite.alert = false;
 			this.visite.login = false;
 			this.visite.mask = false;
+			this.visite.protocol = false;
 		},
 		getPicCodeApi: function(){
 			http('get', getPicCodeApi, null, function(res){
 				if(!res) return
 				this.picImg = res;
 				this.picImgUrl = res.picVerifyUrl +'?picId='+ res.picId;
+			}.bind(this))
+		},
+		getProductProtocol: function () {
+			http('get', getProductProtocol, {
+				protocolType: 1
+			}, function(res){
+				if(!res) return
+				this.visite.mask = true;
+				this.visite.protocol = true;
+				this.protocol = res;
 			}.bind(this))
 		},
 		sendSMSCodeApi: function(){

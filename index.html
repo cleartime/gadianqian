@@ -74,7 +74,7 @@
 								<input type="" name="" placeholder="获取验证码"  v-model = 'login.smsCode'><span class="code-btn" @click = 'sendSMSCodeApi' :class="isSend ? 'dis': ''">{{!isSend ? '获取验证码' : '('+num+')重试'}}</span>
 							</li>
 							<li class="tip flex">
-								<img :src = "tipIconUrl" @click = "tipIcon" />我已阅读并同意<span>《服务协议》</span>
+								<img :src = "tipIconUrl" @click = "tipIcon" />我已阅读并同意<span @click='getProductProtocol'>《服务协议》</span>
 							</li>
 							<li class="btn">
 								<span class="submit-btn" @click = 'submit'>登录</span>
@@ -86,13 +86,17 @@
 			<transition name="fade">
 				<section class="alert" v-show = "visite.alert">
 					<img class="close" src="images/close.png"  width="10%" @click="close">
-					<img :src="home.popupsList[0] && home.popupsList[0].fileStorePath" width="10%" @click='linkto(home.popupsList[0], 2)'>
+					<img :src="home.popupsList[0] && home.popupsList[0].fileStorePath" width='100%' @click='linkto(home.popupsList[0], 2)'>
 				</section>
 			</transition>
-			<transition name="fade">
-				<section class="mask" v-show = "visite.mask"></section>
-			</transition>
+			<section class="mask" v-show = "visite.mask"></section>
 		</div>
+		<transition name="fade">
+			<section class="protocol" v-if='visite.protocol'>
+				<img class="protocolclose" src="images/close.png"  width="10%" @click="(visite.protocol = false,visite.mask = false)">
+				<div v-html = 'protocol.productContent' class="productContent"></div>
+			</section>
+		</transition>
 		<p v-if='error' class="error">
 			服务器维护中，请稍后再试！
 		</p>

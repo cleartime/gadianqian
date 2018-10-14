@@ -296,3 +296,26 @@
 	text-align: center;
 	font-size: 20px;
 }
+.protocol{
+	max-width: 750px;
+	margin: auto;
+	z-index: 102;
+	top: 10%;
+	bottom: 10%;
+	left: 10%;
+	right: 10%;
+	position: fixed;
+}
+.protocolclose{
+	z-index: 102;
+	position: fixed;
+	top: 5%;
+	right: 2%;
+}
+.productContent{
+	overflow: auto;
+	height: 100%;
+	padding: 15px;
+	background: #fff;
+	border-radius: 10px;
+}
