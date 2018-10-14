@@ -82,7 +82,7 @@ new Vue({
 				from: 1,
 				linkUrl: item.linkUrl
 			}
-			http('get', getHomeInfoApi, data, function(){
+			http('get', saveJumpRecord, data, function(){
 				location.href = item.linkUrl;
 			})
 			
