@@ -39,7 +39,7 @@ new Vue({
 			return `/images/${this.tipIconSwitch ? 'succ' : 'kong'}.png`
 		}
 	},
-	created: function (argument) {
+	created: function () {
 		this.init();
 	},
 	mounted: function(){
@@ -68,6 +68,7 @@ new Vue({
 		},
 		linkto: function(item, type){
 			if (!this.user.juid) {
+				window.scroll(0,0)
 				this.visite.protocol = false
 				this.visite.mask = false
 				this.visite.alert = false
@@ -177,7 +178,5 @@ new Vue({
 				this.visite.login = false;
 			}.bind(this), this)
 		}
-	},
-	watch: {
 	}
 })

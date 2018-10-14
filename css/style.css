@@ -319,3 +319,6 @@
 	background: #fff;
 	border-radius: 10px;
 }
+[v-cloak] {
+  display: none;
+}
