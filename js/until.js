@@ -7,7 +7,7 @@ var sendSMSCodeApi = baseUrl + '/aosuite/api/esb/sms/sendSMSCodeApi';
 var regAndLogin = baseUrl + '/aosuite/api/esb/user/regAndLogin';
 var getProductProtocol = baseUrl + '/aosuite/api/product/getProductProtocol';
 Vue.use(Toast);
-function http(type, url, data, ca){
+function http(type, url, data, ca, self){
 	$.ajax({
 	  type: type,
 	  url: url,
@@ -17,8 +17,17 @@ function http(type, url, data, ca){
 	  dataType: 'json'
 	});
 	function success(res){
+		if(res.errCode == 3){
+			localStorage.clear();
+			self.visite.protocol = false
+			self.visite.mask = false
+			self.visite.alert = false
+			self.visite.login = true
+			self.$toast.center(res.friendErrMsg);
+			return ca && ca(false)
+		}
 		if(!res.data){
-			Vue.prototype.$toast.center(res.friendErrMsg);
+			self.$toast.center(res.friendErrMsg);
 			return ca && ca(false)
 		}
 		return ca && ca(res.data)

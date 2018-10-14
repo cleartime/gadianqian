@@ -64,7 +64,7 @@ new Vue({
 				this.$nextTick(function(){
 					this.banner()
 				})
-			}.bind(this))
+			}.bind(this), this)
 		},
 		linkto: function(item, type){
 			if (!this.user.juid) {
@@ -85,7 +85,7 @@ new Vue({
 			http('get', saveJumpRecord, data, function(res){
 				if(!res) return
 				location.href = item.linkUrl;
-			})
+			}, this)
 			
 		},
 		banner(){
@@ -109,7 +109,7 @@ new Vue({
 				if(!res) return
 				this.picImg = res;
 				this.picImgUrl = res.picVerifyUrl +'?picId='+ res.picId;
-			}.bind(this))
+			}.bind(this), this)
 		},
 		getProductProtocol: function () {
 			http('get', getProductProtocol, {
@@ -119,7 +119,7 @@ new Vue({
 				this.visite.mask = true;
 				this.visite.protocol = true;
 				this.protocol = res;
-			}.bind(this))
+			}.bind(this), this)
 		},
 		sendSMSCodeApi: function(){
 			if(this.isSend) return
@@ -148,7 +148,7 @@ new Vue({
 			http('post', sendSMSCodeApi	, data, function(res){
 				if(!res) return
 				this.$toast.center('验证码发送成功');
-			}.bind(this))
+			}.bind(this), this)
 		},
 		tipIcon: function(){
 			this.tipIconSwitch = !this.tipIconSwitch
@@ -175,7 +175,7 @@ new Vue({
 				this.user = res
 				localStorage.user = JSON.stringify(res)
 				this.visite.login = false;
-			}.bind(this))
+			}.bind(this), this)
 		}
 	},
 	watch: {
