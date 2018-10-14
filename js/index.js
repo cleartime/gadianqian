@@ -82,7 +82,8 @@ new Vue({
 				from: 1,
 				linkUrl: item.linkUrl
 			}
-			http('get', saveJumpRecord, data, function(){
+			http('get', saveJumpRecord, data, function(res){
+				if(!res) return
 				location.href = item.linkUrl;
 			})
 			
