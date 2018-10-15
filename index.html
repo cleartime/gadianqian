@@ -96,6 +96,12 @@
 					<div v-html = 'protocol.productContent' class="productContent"></div>
 				</section>
 			</transition>
+			<transition name="fade">
+				<section v-if='visite.iframe' class="iframe">
+					<h2><span @click='close' class="back"><</span>{{link.title || link.productName}}</h2>
+					<iframe :src="link.linkUrl" ref='iframe'></iframe>
+				</section>
+			</transition>
 		</div>
 		<p v-if='error' class="error">
 			服务器维护中，请稍后再试！

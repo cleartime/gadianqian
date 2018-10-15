@@ -12,6 +12,7 @@ new Vue({
 				productList: []
 			},
 			visite: {
+				iframe: false,
 				protocol: false,
 				alert: false,
 				login: false,
@@ -24,6 +25,10 @@ new Vue({
 			picImg: {},
 			isSend: false,
 			picVerifyCode: '',
+			link: {
+				url: '',
+				title: '',
+			},
 			num: 59,
 			login: {
 				mobilePhone: '',
@@ -70,6 +75,7 @@ new Vue({
 			if (!this.user.juid) {
 				window.scroll(0,0)
 				this.visite.protocol = false
+				this.visite.iframe = false
 				this.visite.mask = false
 				this.visite.alert = false
 				this.visite.login = true
@@ -85,8 +91,16 @@ new Vue({
 			}
 			http('get', saveJumpRecord, data, function(res){
 				if(!res) return
-				location.href = item.linkUrl;
-			}, this)
+				this.link = item;
+				this.visite.iframe = true;
+				this.$loading.open('加载中...')
+				this.$nextTick(function(){
+					this.$refs.iframe.addEventListener('load', function(){
+			        	this.$refs.iframe.removeEventListener( "load", arguments.call, false);
+						this.$loading.close()
+				    }.bind(this), false);
+				})
+			}.bind(this), this)
 			
 		},
 		banner(){
@@ -101,6 +115,7 @@ new Vue({
 		},
 		close: function(){
 			this.visite.alert = false;
+			this.visite.iframe = false;
 			this.visite.login = false;
 			this.visite.mask = false;
 			this.visite.protocol = false;
