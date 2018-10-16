@@ -1,7 +1,3 @@
-#app{
-	background: #ecf5fa;
-	min-width: 320px;
-}
 .fade-enter-active, .fade-leave-active {
   transition: opacity .25s;
 }
@@ -60,13 +56,20 @@
 	margin-right: 10px
 }
 .list{
-	margin-top: 15px;
+	margin: 15px 0 40px;
+}
+.list .scroll{
+	line-height: 50px;
+	text-align: center;
 }
 .list li{
 	background: #fff;
 	border-bottom: 1px solid #f6f5f4;
 	padding: 0 15px 15px;
 	margin-top: 15px;
+}
+.list li:last-child{
+	border: none;
 }
 .list li .title{
 	display: flex;

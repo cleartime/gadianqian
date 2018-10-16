@@ -12,14 +12,17 @@ new Vue({
 				productList: []
 			},
 			visite: {
+				iframeTitle: false,
 				iframe: false,
 				protocol: false,
 				alert: false,
 				login: false,
 				mask: false,
 			},
+			scrollLow: false,
 			protocol: {},
 			error: false,
+			scrollLowText: '',
 			tipIconSwitch: false,
 			picImgUrl: '',
 			picImg: {},
@@ -29,6 +32,9 @@ new Vue({
 				url: '',
 				title: '',
 			},
+			page: 1,
+			pageSize: 5,
+			pageTotal: 0,
 			num: 59,
 			login: {
 				mobilePhone: '',
@@ -48,13 +54,21 @@ new Vue({
 		this.init();
 	},
 	mounted: function(){
-		this.getPicCodeApi()
+		this.scroll();
 	},
 	methods: {
-		init: function(){
-			http('get', getHomeInfoApi, null, function(res){
+		init: function(scrollLow){
+			http('get', getHomeInfoApi, {
+				page: this.page,
+				pageSize: this.pageSize
+			}, function(res){
 				if(!res) {
 					this.error = true
+					return
+				}
+				this.pageTotal = res.pageTotal;
+				if(scrollLow) {
+					this.home.productList = this.home.productList.concat(res.productList);
 					return
 				}
 				this.home = res;
@@ -75,10 +89,12 @@ new Vue({
 			if (!this.user.juid) {
 				window.scroll(0,0)
 				this.visite.protocol = false
+				this.visite.iframeTitle = false
 				this.visite.iframe = false
 				this.visite.mask = false
 				this.visite.alert = false
 				this.visite.login = true
+				this.getPicCodeApi()
 				return
 			}
 			var data = {
@@ -96,6 +112,7 @@ new Vue({
 				this.$loading.open('加载中...')
 				this.$nextTick(function(){
 					this.$refs.iframe.addEventListener('load', function(){
+						this.visite.iframeTitle = true;
 			        	this.$refs.iframe.removeEventListener( "load", arguments.call, false);
 						this.$loading.close()
 				    }.bind(this), false);
@@ -113,11 +130,32 @@ new Vue({
 			    }
 			 })
 		},
+		scroll: function(){
+			var _this = this;
+			$(window).scroll(function(){
+			　　var scrollTop = $(this).scrollTop();
+			　　var scrollHeight = $(document).height();
+			　　var windowHeight = $(this).height();
+			　　if(scrollTop + windowHeight == scrollHeight){
+					_this.scrollLow = true;
+					log((Number(_this.page)*Number(_this.pageSize)))
+					log(_this.pageTotal)
+					if((Number(_this.page)*Number(_this.pageSize)) > _this.pageTotal){
+						_this.scrollLowText = '没有数据了'
+						return
+					}
+					_this.scrollLowText = '加载中...'
+					_this.page++;
+					_this.init(true);
+			　　}
+			});
+		},
 		close: function(){
 			this.visite.alert = false;
 			this.visite.iframe = false;
 			this.visite.login = false;
 			this.visite.mask = false;
+			this.visite.iframeTitle = false;
 			this.visite.protocol = false;
 		},
 		getPicCodeApi: function(){

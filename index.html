@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div id="app" v-cloak>
-		<div v-if="home.banerList.length && home.hotRecoList.length && home.productList.length">
+		<div class="warp" v-if="home.banerList.length && home.hotRecoList.length && home.productList.length">
 			<section class="slider">
 				<div class="swiper-container">
 				    <div class="swiper-wrapper">
@@ -56,6 +56,7 @@
 						</div>
 					</li>
 				</ul>
+				<p class="scroll" v-if='scrollLow'>{{scrollLowText}}</p>
 			</section>
 			<transition name="fade" >
 				<section class="login-margin" @touchmove.prevent v-show = "visite.login">
@@ -98,7 +99,7 @@
 			</transition>
 			<transition name="fade">
 				<section v-if='visite.iframe' class="iframe">
-					<h2><span @click='close' class="back"><</span>{{link.title || link.productName}}</h2>
+					<h2 v-if='visite.iframeTitle'><span @click='close' class="back"><</span>{{link.title || link.productName}}</h2>
 					<iframe :src="link.linkUrl" ref='iframe'></iframe>
 				</section>
 			</transition>

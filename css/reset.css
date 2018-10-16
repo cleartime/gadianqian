@@ -46,7 +46,8 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-html, body, #app{
+html, body, #app, .warp{
+	background: #ecf5fa;
 	height: 100%;
 	margin: auto;
 	max-width: 750px;

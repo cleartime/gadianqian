@@ -1,6 +1,6 @@
 window.log = console.log
 var baseUrl = 'http://47.104.242.171:80'
-var getHomeInfoApi = baseUrl + '/aosuite/api/esb/user/getHomeInfoApi?page=1&pageSize=2';
+var getHomeInfoApi = baseUrl + '/aosuite/api/esb/user/getHomeInfoApi';
 var saveJumpRecord = baseUrl + '/aosuite/api/esb/user/saveJumpRecord';
 var getPicCodeApi = baseUrl + '/aosuite/api/esb/captcha/getPicCodeApi';
 var sendSMSCodeApi = baseUrl + '/aosuite/api/esb/sms/sendSMSCodeApi';
