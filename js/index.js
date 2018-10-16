@@ -52,6 +52,7 @@ new Vue({
 	},
 	created: function () {
 		this.init();
+		this.getPicCodeApi();
 	},
 	mounted: function(){
 		this.scroll();
@@ -94,7 +95,6 @@ new Vue({
 				this.visite.mask = false
 				this.visite.alert = false
 				this.visite.login = true
-				this.getPicCodeApi()
 				return
 			}
 			var data = {
