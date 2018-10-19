@@ -1,5 +1,5 @@
 window.log = console.log
-var baseUrl = 'http://47.104.242.171:80'
+var baseUrl = 'https://47.104.242.171:80'
 var getHomeInfoApi = baseUrl + '/aosuite/api/esb/user/getHomeInfoApi';
 var saveJumpRecord = baseUrl + '/aosuite/api/esb/user/saveJumpRecord';
 var getPicCodeApi = baseUrl + '/aosuite/api/esb/captcha/getPicCodeApi';
