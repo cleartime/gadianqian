@@ -108,6 +108,10 @@ new Vue({
 			http('get', saveJumpRecord, data, function(res){
 				if(!res) return
 				this.link = item;
+				if (location.protocol === 'http:') {
+					location.href = this.link
+					return
+				}
 				this.visite.iframe = true;
 				this.$loading.open('加载中...')
 				this.$nextTick(function(){
