@@ -107,8 +107,9 @@ new Vue({
 			}
 			http('get', saveJumpRecord, data, function(res){
 				if(!res) return
+				this.link = item
 				if (location.protocol === 'http:') {
-					location.href = item.linkUrl
+					location.href = this.link.linkUrl
 					return
 				}
 				this.visite.iframe = true;
@@ -124,12 +125,26 @@ new Vue({
 			
 		},
 		banner(){
+			var _this = this;
 			new Swiper('.swiper-container', {
 				autoplay: true,
 			    loop: true, // 循环模式选项
 			    disableOnInteraction: false,
 			    pagination: {
 			      el: '.swiper-pagination',
+			    },
+			    on:{
+			    	tap: function(event){
+			    		var item = event.srcElement.attributes
+			    		var linkUrl = item.linkUrl.value
+			    		var productId = item.productId ? item.productId.value : ''
+			    		var title = item.title.value
+			    		_this.linkto({
+			    			linkUrl: linkUrl,
+			    			productId: productId,
+			    			title: title
+			    		}, 1)
+			    	}
 			    }
 			 })
 		},
@@ -141,8 +156,6 @@ new Vue({
 			　　var windowHeight = $(this).height();
 			　　if(scrollTop + windowHeight == scrollHeight){
 					_this.scrollLow = true;
-					log((Number(_this.page)*Number(_this.pageSize)))
-					log(_this.pageTotal)
 					if((Number(_this.page)*Number(_this.pageSize)) > _this.pageTotal){
 						_this.scrollLowText = '没有数据了'
 						return

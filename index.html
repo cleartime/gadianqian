@@ -15,7 +15,7 @@
 			<section class="slider">
 				<div class="swiper-container">
 				    <div class="swiper-wrapper">
-				        <div class="swiper-slide" v-for='(i, index) in home.banerList' :key='index'><img :src="i.fileStorePath" width="100%" @click='linkto(i, 1)'></div>
+				        <div class="swiper-slide" v-for='(i, index) in home.banerList' :key='index' ><img :src="i.fileStorePath" width="100%" :productId='i.productId' :title='i.title' :linkUrl='i.linkUrl'  :index='index' ></div>
 				    </div>
 				    <!-- 如果需要分页器 -->
 				    <div class="swiper-pagination"></div>
@@ -99,7 +99,7 @@
 			</transition>
 			<transition name="fade">
 				<section v-if='visite.iframe' class="iframe">
-					<h2 v-if='visite.iframeTitle'><span @click='close' class="back"><</span>{{link.title || link.productName}}</h2>
+					<h2 v-if='visite.iframeTitle'><span @click='close' class="back"><</span>{{link.title || link.productName || link.fileName}}</h2>
 					<div style="overflow: auto;-webkit-overflow-scrolling:touch;width:100%;height:100%;">
 					    <iframe :src="link.linkUrl" ref='iframe' frameborder="0" height="100%" scrolling='no' style="width: 1px; min-width: 100%; *width: 100%;"></iframe>
 					  </div>
